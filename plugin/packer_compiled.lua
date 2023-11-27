@@ -104,6 +104,11 @@ _G.packer_plugins = {
     path = "/Users/arthur/.local/share/nvim/site/pack/packer/start/coc-sql",
     url = "https://github.com/fannheyward/coc-sql"
   },
+  ["indent-blankline.nvim"] = {
+    loaded = true,
+    path = "/Users/arthur/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
+    url = "https://github.com/lukas-reineke/indent-blankline.nvim"
+  },
   ["lazygit.nvim"] = {
     loaded = true,
     path = "/Users/arthur/.local/share/nvim/site/pack/packer/start/lazygit.nvim",
