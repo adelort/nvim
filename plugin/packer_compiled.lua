@@ -99,10 +99,10 @@ _G.packer_plugins = {
     path = "/Users/arthur/.local/share/nvim/site/pack/packer/start/cmp-path",
     url = "https://github.com/hrsh7th/cmp-path"
   },
-  ["coc-sql"] = {
+  ["efmls-configs-nvim"] = {
     loaded = true,
-    path = "/Users/arthur/.local/share/nvim/site/pack/packer/start/coc-sql",
-    url = "https://github.com/fannheyward/coc-sql"
+    path = "/Users/arthur/.local/share/nvim/site/pack/packer/start/efmls-configs-nvim",
+    url = "https://github.com/creativenull/efmls-configs-nvim"
   },
   ["indent-blankline.nvim"] = {
     loaded = true,
@@ -128,6 +128,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/arthur/.local/share/nvim/site/pack/packer/start/mason.nvim",
     url = "https://github.com/williamboman/mason.nvim"
+  },
+  ["nvim-autopairs"] = {
+    loaded = true,
+    path = "/Users/arthur/.local/share/nvim/site/pack/packer/start/nvim-autopairs",
+    url = "https://github.com/windwp/nvim-autopairs"
   },
   ["nvim-cmp"] = {
     loaded = true,
