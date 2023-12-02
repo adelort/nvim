@@ -189,6 +189,11 @@ _G.packer_plugins = {
     path = "/Users/arthur/.local/share/nvim/site/pack/packer/start/vim-gitgutter",
     url = "https://github.com/airblade/vim-gitgutter"
   },
+  ["vim-highlightedyank"] = {
+    loaded = true,
+    path = "/Users/arthur/.local/share/nvim/site/pack/packer/start/vim-highlightedyank",
+    url = "https://github.com/machakann/vim-highlightedyank"
+  },
   ["vim-illuminate"] = {
     loaded = true,
     path = "/Users/arthur/.local/share/nvim/site/pack/packer/start/vim-illuminate",
