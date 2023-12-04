@@ -99,6 +99,11 @@ _G.packer_plugins = {
     path = "/Users/arthur/.local/share/nvim/site/pack/packer/start/cmp-path",
     url = "https://github.com/hrsh7th/cmp-path"
   },
+  ["ctrlsf.vim"] = {
+    loaded = true,
+    path = "/Users/arthur/.local/share/nvim/site/pack/packer/start/ctrlsf.vim",
+    url = "https://github.com/dyng/ctrlsf.vim"
+  },
   ["efmls-configs-nvim"] = {
     loaded = true,
     path = "/Users/arthur/.local/share/nvim/site/pack/packer/start/efmls-configs-nvim",

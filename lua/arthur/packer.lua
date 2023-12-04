@@ -62,4 +62,6 @@ return require("packer").startup(function(use)
 	use("machakann/vim-highlightedyank")
 
 	use("windwp/nvim-autopairs")
+
+	use("dyng/ctrlsf.vim")
 end)
