@@ -119,6 +119,16 @@ _G.packer_plugins = {
     path = "/Users/arthur/.local/share/nvim/site/pack/packer/start/lazygit.nvim",
     url = "https://github.com/kdheepak/lazygit.nvim"
   },
+  ["lspkind.nvim"] = {
+    loaded = true,
+    path = "/Users/arthur/.local/share/nvim/site/pack/packer/start/lspkind.nvim",
+    url = "https://github.com/onsails/lspkind.nvim"
+  },
+  ["lspsaga.nvim"] = {
+    loaded = true,
+    path = "/Users/arthur/.local/share/nvim/site/pack/packer/start/lspsaga.nvim",
+    url = "https://github.com/glepnir/lspsaga.nvim"
+  },
   ["lualine.nvim"] = {
     loaded = true,
     path = "/Users/arthur/.local/share/nvim/site/pack/packer/start/lualine.nvim",

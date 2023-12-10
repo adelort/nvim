@@ -64,4 +64,14 @@ return require("packer").startup(function(use)
 	use("windwp/nvim-autopairs")
 
 	use("dyng/ctrlsf.vim")
+
+	use({
+		"glepnir/lspsaga.nvim",
+		lazy = false,
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+		},
+	})
+
+	use("onsails/lspkind.nvim")
 end)
