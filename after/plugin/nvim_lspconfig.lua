@@ -101,7 +101,6 @@ local luacheck = require("efmls-configs.linters.luacheck")
 local stylua = require("efmls-configs.formatters.stylua")
 local eslint_d = require("efmls-configs.linters.eslint_d")
 local prettier_d = require("efmls-configs.formatters.prettier_d")
-local shellcheck = require("efmls-configs.linters.shellcheck")
 local shfmt = require("efmls-configs.formatters.shfmt")
 local hadolint = require("efmls-configs.linters.hadolint")
 local sql_formatter = require("efmls-configs.formatters.sql-formatter")
@@ -137,7 +136,7 @@ lspconfig.efm.setup({
 			lua = { luacheck, stylua },
 			typescript = { eslint_d, prettier_d },
 			json = { eslint_d, prettier_d },
-			sh = { shellcheck, shfmt },
+			sh = { shfmt },
 			javascript = { eslint_d, prettier_d },
 			javascriptreact = { eslint_d, prettier_d },
 			typescriptreact = { eslint_d, prettier_d },
