@@ -92,4 +92,6 @@ return require("packer").startup(function(use)
 	})
 
 	use("onsails/lspkind.nvim")
+
+	use("PatschD/zippy.nvim")
 end)

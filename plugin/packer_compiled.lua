@@ -159,7 +159,7 @@ _G.packer_plugins = {
     url = "https://github.com/windwp/nvim-autopairs"
   },
   ["nvim-cmp"] = {
-    after = { "cmp-nvim-lsp", "vim-vsnip" },
+    after = { "vim-vsnip", "cmp-nvim-lsp" },
     load_after = {},
     loaded = true,
     needs_bufread = false,
@@ -256,6 +256,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/arthur/.local/share/nvim/site/pack/packer/start/which-key.nvim",
     url = "https://github.com/folke/which-key.nvim"
+  },
+  ["zippy.nvim"] = {
+    loaded = true,
+    path = "/Users/arthur/.local/share/nvim/site/pack/packer/start/zippy.nvim",
+    url = "https://github.com/PatschD/zippy.nvim"
   }
 }
 
