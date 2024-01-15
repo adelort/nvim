@@ -269,13 +269,13 @@ time([[Defining packer_plugins]], false)
 time([[Sequenced loading]], true)
 vim.cmd [[ packadd nvim-lspconfig ]]
 vim.cmd [[ packadd nvim-cmp ]]
+vim.cmd [[ packadd vim-vsnip ]]
+vim.cmd [[ packadd vim-vsnip-integ ]]
 vim.cmd [[ packadd cmp-nvim-lsp ]]
 
 -- Config for: cmp-nvim-lsp
 try_loadstring("\27LJ\2\n>\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\17cmp_nvim_lsp\frequire\0", "config", "cmp-nvim-lsp")
 
-vim.cmd [[ packadd vim-vsnip ]]
-vim.cmd [[ packadd vim-vsnip-integ ]]
 time([[Sequenced loading]], false)
 
 _G._packer.inside_compile = false
