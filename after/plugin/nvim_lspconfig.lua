@@ -97,6 +97,15 @@ lspconfig.prismals.setup({
 	filetypes = { "prisma" },
 })
 
+-- rust
+lspconfig.rust_analyzer.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+	settings = {
+		["rust-analyzer"] = {},
+	},
+})
+
 local luacheck = require("efmls-configs.linters.luacheck")
 local stylua = require("efmls-configs.formatters.stylua")
 local eslint_d = require("efmls-configs.linters.eslint_d")
@@ -104,6 +113,8 @@ local prettier_d = require("efmls-configs.formatters.prettier_d")
 local shfmt = require("efmls-configs.formatters.shfmt")
 local hadolint = require("efmls-configs.linters.hadolint")
 local sql_formatter = require("efmls-configs.formatters.sql-formatter")
+local dprint = require("efmls-configs.formatters.dprint")
+local rustfmt = require("efmls-configs.formatters.rustfmt")
 
 -- configure efm server
 lspconfig.efm.setup({
@@ -122,6 +133,7 @@ lspconfig.efm.setup({
 		"yaml",
 		"sql",
 		"prisma",
+		"rust",
 	},
 	init_options = {
 		documentFormatting = true,
@@ -146,6 +158,7 @@ lspconfig.efm.setup({
 			css = { prettier_d },
 			yaml = { prettier_d },
 			sql = { sql_formatter },
+			rust = { dprint, rustfmt },
 		},
 	},
 })
