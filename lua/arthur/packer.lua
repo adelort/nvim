@@ -94,4 +94,6 @@ return require("packer").startup(function(use)
 	use("onsails/lspkind.nvim")
 
 	use("PatschD/zippy.nvim")
+
+	use("zivyangll/git-blame.vim")
 end)
