@@ -1,7 +1,6 @@
-local cmp_nvim_lsp = require("cmp_nvim_lsp")
 local lspconfig = require("lspconfig")
 
-local capabilities = cmp_nvim_lsp.default_capabilities()
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 local on_attach = function(client, bufnr)
 	local opts = { noremap = true, silent = true, buffer = bufnr }
@@ -108,32 +107,36 @@ lspconfig.rust_analyzer.setup({
 
 local luacheck = require("efmls-configs.linters.luacheck")
 local stylua = require("efmls-configs.formatters.stylua")
-local eslint_d = require("efmls-configs.linters.eslint_d")
-local prettier_d = require("efmls-configs.formatters.prettier_d")
+local eslint = require("efmls-configs.linters.eslint")
+local prettier = require("efmls-configs.formatters.prettier")
 local shfmt = require("efmls-configs.formatters.shfmt")
 local hadolint = require("efmls-configs.linters.hadolint")
 local sql_formatter = require("efmls-configs.formatters.sql-formatter")
 local dprint = require("efmls-configs.formatters.dprint")
 local rustfmt = require("efmls-configs.formatters.rustfmt")
 
--- configure efm server
-lspconfig.efm.setup({
-	filetypes = {
-		"lua",
-		"json",
-		"sh",
-		"javascript",
-		"javascriptreact",
-		"typescript",
-		"typescriptreact",
-		"markdown",
-		"docker",
-		"html",
-		"css",
-		"yaml",
-		"sql",
-		"prisma",
-		"rust",
+local languages = {
+	lua = { luacheck, stylua },
+	json = { eslint, prettier },
+	sh = { shfmt },
+	javascript = { eslint, prettier },
+	typescript = { eslint, prettier },
+	javascriptreact = { eslint, prettier },
+	typescriptreact = { eslint, prettier },
+	markdown = { prettier },
+	docker = { hadolint, prettier },
+	html = { prettier },
+	css = { prettier },
+	yaml = { prettier },
+	sql = { sql_formatter },
+	rust = { dprint, rustfmt },
+}
+
+local efmls_config = {
+	filetypes = vim.tbl_keys(languages),
+	settings = {
+		rootMarkers = { ".git/" },
+		languages = languages,
 	},
 	init_options = {
 		documentFormatting = true,
@@ -143,32 +146,17 @@ lspconfig.efm.setup({
 		codeAction = true,
 		completion = true,
 	},
-	settings = {
-		languages = {
-			lua = { luacheck, stylua },
-			typescript = { eslint_d, prettier_d },
-			json = { eslint_d, prettier_d },
-			sh = { shfmt },
-			javascript = { eslint_d, prettier_d },
-			javascriptreact = { eslint_d, prettier_d },
-			typescriptreact = { eslint_d, prettier_d },
-			markdown = { prettier_d },
-			docker = { hadolint, prettier_d },
-			html = { prettier_d },
-			css = { prettier_d },
-			yaml = { prettier_d },
-			sql = { sql_formatter },
-			rust = { dprint, rustfmt },
-		},
-	},
-})
+}
+
+lspconfig.efm.setup(efmls_config)
 
 -- Format on save
 local lsp_fmt_group = vim.api.nvim_create_augroup("LspFormattingGroup", {})
+
 vim.api.nvim_create_autocmd("BufWritePre", {
 	group = lsp_fmt_group,
-	callback = function()
-		local efm = vim.lsp.get_active_clients({ name = "efm" })
+	callback = function(ev)
+		local efm = vim.lsp.get_active_clients({ name = "efm", bufnr = ev.buf })
 
 		if vim.tbl_isempty(efm) then
 			return

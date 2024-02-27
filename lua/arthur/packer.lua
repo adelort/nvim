@@ -31,9 +31,11 @@ return require("packer").startup(function(use)
 
 	use("tpope/vim-surround")
 
-	use("neovim/nvim-lspconfig")
-	use("williamboman/mason.nvim")
-	use("williamboman/mason-lspconfig.nvim")
+	use({
+		"williamboman/mason.nvim",
+		"williamboman/mason-lspconfig.nvim",
+		"neovim/nvim-lspconfig",
+	})
 	use("creativenull/efmls-configs-nvim")
 
 	use("numToStr/Comment.nvim")
@@ -84,11 +86,8 @@ return require("packer").startup(function(use)
 	use("dyng/ctrlsf.vim")
 
 	use({
-		"glepnir/lspsaga.nvim",
-		lazy = false,
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-		},
+		"nvimdev/lspsaga.nvim",
+		after = "nvim-lspconfig",
 	})
 
 	use("onsails/lspkind.nvim")
