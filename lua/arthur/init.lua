@@ -1,4 +1,4 @@
 require("arthur.set")
+require("arthur.lazy")
 require("arthur.remap")
-require("arthur.packer")
 

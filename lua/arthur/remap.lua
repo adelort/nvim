@@ -1,5 +1,5 @@
 vim.keymap.set("n", "<leader>w", vim.cmd.w)
-  vim.keymap.set("n", "<leader>W", ":noautocmd w<CR>")
+vim.keymap.set("n", "<leader>W", ":noautocmd w<CR>")
 vim.keymap.set("n", "<leader>c", vim.cmd.q)
 vim.keymap.set("n", "<leader>C", vim.cmd.qa)
 
