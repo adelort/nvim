@@ -153,7 +153,7 @@ lspconfig.efm.setup(efmls_config)
 -- Format on save
 local lsp_fmt_group = vim.api.nvim_create_augroup("LspFormattingGroup", {})
 
-vim.api.nvim_create_autocmd("BufWritePre", {
+vim.api.nvim_create_autocmd("BufWriteCmd", {
 	group = lsp_fmt_group,
 	callback = function(ev)
 		local efm = vim.lsp.get_active_clients({ name = "efm", bufnr = ev.buf })
@@ -162,6 +162,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 			return
 		end
 
-		vim.lsp.buf.format({ name = "efm", async = false })
+		vim.lsp.buf.format({ name = "efm", async = true })
 	end,
 })
