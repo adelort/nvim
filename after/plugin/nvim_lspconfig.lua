@@ -112,7 +112,6 @@ local prettier = require("efmls-configs.formatters.prettier")
 local shfmt = require("efmls-configs.formatters.shfmt")
 local hadolint = require("efmls-configs.linters.hadolint")
 local sql_formatter = require("efmls-configs.formatters.sql-formatter")
-local dprint = require("efmls-configs.formatters.dprint")
 local rustfmt = require("efmls-configs.formatters.rustfmt")
 
 local languages = {
@@ -129,7 +128,7 @@ local languages = {
 	css = { prettier },
 	yaml = { prettier },
 	sql = { sql_formatter },
-	rust = { dprint, rustfmt },
+	rust = { rustfmt },
 }
 
 local efmls_config = {
