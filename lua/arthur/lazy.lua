@@ -65,25 +65,10 @@ require("lazy").setup({
 	"hrsh7th/cmp-buffer",
 	"hrsh7th/cmp-path",
 	"hrsh7th/cmp-cmdline",
-	{
-		"hrsh7th/nvim-cmp",
-		after = "nvim-lspconfig",
-	},
-	{
-		"hrsh7th/cmp-nvim-lsp",
-		after = "nvim-cmp",
-		config = function()
-			require("cmp_nvim_lsp").setup({})
-		end,
-	},
-	{
-		"hrsh7th/vim-vsnip",
-		after = "nvim-cmp",
-	},
-	{
-		"hrsh7th/vim-vsnip-integ",
-		after = "vim-vsnip",
-	},
+	"hrsh7th/nvim-cmp",
+	"hrsh7th/cmp-nvim-lsp",
+	"hrsh7th/vim-vsnip",
+	"hrsh7th/vim-vsnip-integ",
 	"hrsh7th/cmp-vsnip",
 
 	"lukas-reineke/indent-blankline.nvim",
@@ -94,10 +79,7 @@ require("lazy").setup({
 
 	"dyng/ctrlsf.vim",
 
-	{
-		"nvimdev/lspsaga.nvim",
-		after = "nvim-lspconfig",
-	},
+	"nvimdev/lspsaga.nvim",
 
 	"onsails/lspkind.nvim",
 

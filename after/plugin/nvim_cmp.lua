@@ -1,5 +1,6 @@
 local cmp = require("cmp")
 local lspkind = require("lspkind")
+require("cmp_nvim_lsp").setup({})
 
 cmp.setup({
 	snippet = {
