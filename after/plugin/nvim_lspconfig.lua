@@ -110,7 +110,7 @@ local stylua = require("efmls-configs.formatters.stylua")
 local eslint = require("efmls-configs.linters.eslint")
 local prettier = require("efmls-configs.formatters.prettier")
 local shfmt = require("efmls-configs.formatters.shfmt")
-  local hadolint = require("efmls-configs.linters.hadolint")
+local hadolint = require("efmls-configs.linters.hadolint")
 local sql_formatter = require("efmls-configs.formatters.sql-formatter")
 local rustfmt = require("efmls-configs.formatters.rustfmt")
 
