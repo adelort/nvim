@@ -88,4 +88,6 @@ require("lazy").setup({
 	"zivyangll/git-blame.vim",
 
 	"prisma/vim-prisma",
+
+	"sbdchd/neoformat",
 })
