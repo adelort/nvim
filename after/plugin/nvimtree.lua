@@ -10,6 +10,12 @@ require("nvim-tree").setup({
 		dotfiles = false,
 		git_ignored = false,
 	},
+	filesystem_watchers = {
+		ignore_dirs = {
+			"node_modules",
+			".next",
+		},
+	},
 })
 
 vim.keymap.set("n", "<leader>n", ":NvimTreeFindFile<CR>")
