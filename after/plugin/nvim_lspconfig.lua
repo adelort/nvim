@@ -143,7 +143,7 @@ local efmls_config = {
 		hover = true,
 		documentSymbol = true,
 		codeAction = true,
-		completion = true,
+		-- completion = true,
 	},
 }
 

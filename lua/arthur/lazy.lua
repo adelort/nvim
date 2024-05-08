@@ -67,9 +67,6 @@ require("lazy").setup({
 	"hrsh7th/cmp-cmdline",
 	"hrsh7th/nvim-cmp",
 	"hrsh7th/cmp-nvim-lsp",
-	"hrsh7th/vim-vsnip",
-	"hrsh7th/vim-vsnip-integ",
-	"hrsh7th/cmp-vsnip",
 
 	"lukas-reineke/indent-blankline.nvim",
 
