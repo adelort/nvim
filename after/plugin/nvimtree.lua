@@ -1,3 +1,14 @@
+require("nvim-web-devicons").setup({
+	override = {
+		tsx = {
+			icon = "",
+			color = "#1354bf",
+			cterm_color = "26",
+			name = "TypescriptReact",
+		},
+	},
+})
+
 require("nvim-tree").setup({
 	sort_by = "case_sensitive",
 	view = {
