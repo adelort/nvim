@@ -55,8 +55,6 @@ require("lazy").setup({
 
 	"nvim-lualine/lualine.nvim",
 
-	"folke/which-key.nvim",
-
 	"RRethy/vim-illuminate",
 
 	"airblade/vim-gitgutter",
