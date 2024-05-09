@@ -59,8 +59,6 @@ require("lazy").setup({
 
 	"airblade/vim-gitgutter",
 
-	"nvim-treesitter/nvim-treesitter-context",
-
 	"hrsh7th/cmp-buffer",
 	"hrsh7th/cmp-path",
 	"hrsh7th/cmp-cmdline",
