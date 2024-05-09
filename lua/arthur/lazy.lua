@@ -48,6 +48,7 @@ require("lazy").setup({
 	"creativenull/efmls-configs-nvim",
 
 	"numToStr/Comment.nvim",
+	"JoosepAlviste/nvim-ts-context-commentstring",
 
 	"nvim-tree/nvim-tree.lua",
 	"nvim-tree/nvim-web-devicons",
