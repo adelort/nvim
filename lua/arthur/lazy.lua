@@ -84,4 +84,6 @@ require("lazy").setup({
 	"prisma/vim-prisma",
 
 	"sbdchd/neoformat",
+
+	"windwp/nvim-ts-autotag",
 })
