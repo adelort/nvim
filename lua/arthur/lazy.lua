@@ -86,4 +86,6 @@ require("lazy").setup({
 	"sbdchd/neoformat",
 
 	"windwp/nvim-ts-autotag",
+
+	{ "akinsho/bufferline.nvim", version = "*", dependencies = "nvim-tree/nvim-web-devicons" },
 })
