@@ -2,6 +2,9 @@ vim.keymap.set("n", "<leader>w", vim.cmd.w)
 vim.keymap.set("n", "<leader>c", vim.cmd.q)
 vim.keymap.set("n", "<leader>C", vim.cmd.qa)
 
+vim.keymap.set("n", "<leader>k", vim.cmd.bnext)
+vim.keymap.set("n", "<leader>j", vim.cmd.bprevious)
+
 vim.keymap.set("n", "<leader>h", vim.cmd.noh)
 
 vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
