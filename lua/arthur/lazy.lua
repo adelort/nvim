@@ -55,8 +55,6 @@ require("lazy").setup({
 
 	"nvim-lualine/lualine.nvim",
 
-	"RRethy/vim-illuminate",
-
 	"airblade/vim-gitgutter",
 
 	"hrsh7th/cmp-buffer",
