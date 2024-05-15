@@ -87,5 +87,14 @@ require("lazy").setup({
 
 	{ "akinsho/bufferline.nvim", version = "*", dependencies = "nvim-tree/nvim-web-devicons" },
 
-	{ "mg979/vim-visual-multi", branch = "master" },
+	{
+		"mg979/vim-visual-multi",
+		branch = "master",
+		init = function()
+			vim.g.VM_maps = {
+				["Add Cursor Down"] = "<C-j>",
+				["Add Cursor Up"] = "<C-k>",
+			}
+		end,
+	},
 })
