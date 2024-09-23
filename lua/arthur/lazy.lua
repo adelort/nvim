@@ -81,7 +81,10 @@ require("lazy").setup({
 
 	"prisma/vim-prisma",
 
-	"sbdchd/neoformat",
+  {
+    'stevearc/conform.nvim',
+    opts = {},
+  },
 
 	"windwp/nvim-ts-autotag",
 
