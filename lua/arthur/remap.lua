@@ -16,3 +16,8 @@ vim.keymap.set("n", "<C-l>", "<C-w>l")
 
 vim.keymap.set({ "n", "v" }, "<leader>y", '"*y')
 
+vim.keymap.set("c", "<C-a>", "<Home>")
+vim.keymap.set("c", "<C-b>", "<Left>")
+vim.keymap.set("c", "<C-f>", "<Right>")
+vim.keymap.set("c", "<Esc>b", "<S-Left>")
+vim.keymap.set("c", "<Esc>f", "<S-Right>")
