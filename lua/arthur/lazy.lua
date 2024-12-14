@@ -107,4 +107,5 @@ require("lazy").setup({
 			"kkharji/sqlite.lua", -- Optional, sqlite support
 		},
 	},
+  "rust-lang/rust.vim",
 })
