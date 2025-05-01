@@ -47,6 +47,12 @@ lspconfig.jsonls.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 	filetypes = { "json", "jsonc" },
+	settings = {
+		json = {
+			schemas = require('schemastore').json.schemas(),
+			validate = { enable = true },
+		},
+	},
 })
 
 -- typescript
@@ -105,3 +111,10 @@ lspconfig.rust_analyzer.setup({
 	},
 })
 
+-- Setup conform.nvim for formatting
+require("conform").setup({
+	formatters_by_ft = {
+		json = { "prettier" },
+		jsonc = { "prettier" },
+	},
+})

@@ -106,4 +106,8 @@ require("lazy").setup({
 		},
 	},
   "rust-lang/rust.vim",
+  {
+    "b0o/schemastore.nvim",
+    dependencies = { "neovim/nvim-lspconfig" },
+  },
 })

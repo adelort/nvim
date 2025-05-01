@@ -8,6 +8,8 @@ conform.setup({
     javascriptreact = { "prettierd", "prettier", stop_after_first = true },
     typescriptreact = { "prettierd", "prettier", stop_after_first = true },
     rust = { "rustfmt" },
+    json = { "prettierd", "prettier", stop_after_first = true },
+    jsonc = { "prettierd", "prettier", stop_after_first = true },
   },
 })
 
@@ -17,4 +19,4 @@ vim.keymap.set("n", "<leader>f", function()
     async = false,
     timeout_ms = 500
   })
-end)
+end, { desc = "Format file" })
