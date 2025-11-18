@@ -1,17 +1,17 @@
 local builtin = require("telescope.builtin")
 
 require("telescope").setup({
-	defaults = {
-		file_ignore_patterns = {
-			".git/",
-			"node_modules/",
-		},
-	},
-	pickers = {
-		find_files = {
-			hidden = true,
-		},
-	},
+  defaults = {
+    file_ignore_patterns = {
+      ".git/",
+      "node_modules/",
+    },
+  },
+  pickers = {
+    find_files = {
+      hidden = true,
+    },
+  },
 })
 
 vim.keymap.set("n", "<leader>pa", builtin.find_files, {})

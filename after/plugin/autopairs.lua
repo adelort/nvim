@@ -1,3 +1,3 @@
 require("nvim-autopairs").setup({
-	event = "InsertEnter",
+  event = "InsertEnter",
 })
