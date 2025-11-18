@@ -54,7 +54,8 @@ require("lazy").setup({
           "lua_ls",
           "ts_ls",
           "efm",
-          "graphql"
+          "graphql",
+          "prisma"
         },
         automatic_installation = true,
       })
