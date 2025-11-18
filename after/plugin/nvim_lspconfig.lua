@@ -111,6 +111,18 @@ lspconfig.rust_analyzer.setup({
 	},
 })
 
+lspconfig.graphql.setup({
+  root_dir = lspconfig.util.root_pattern('.graphqlrc.yml'),
+  filetypes = {
+    'graphql',
+    'typescript',
+    'typescriptreact',
+    'javascript',
+    'javascriptreact',
+  },
+  on_attach = on_attach
+})
+
 -- Setup conform.nvim for formatting
 require("conform").setup({
 	formatters_by_ft = {

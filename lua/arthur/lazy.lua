@@ -1,110 +1,125 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable", -- latest stable release
-		lazypath,
-	})
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	{
-		"nvim-telescope/telescope.nvim",
-		tag = "0.1.5",
-		dependencies = { "nvim-lua/plenary.nvim" },
-	},
+  {
+    "nvim-telescope/telescope.nvim",
+    tag = "0.1.5",
+    dependencies = { "nvim-lua/plenary.nvim" },
+  },
 
-	{
-		"folke/tokyonight.nvim",
-		lazy = false,
-		priority = 1000,
-		opts = {},
-	},
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
 
-	{
-		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate",
-	},
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+  },
 
-	"mbbill/undotree",
+  "mbbill/undotree",
 
-	{
-		"kdheepak/lazygit.nvim",
-		-- optional for floating window border decoration
-		dependencies = { "nvim-lua/plenary.nvim" },
-	},
+  {
+    "kdheepak/lazygit.nvim",
+    -- optional for floating window border decoration
+    dependencies = { "nvim-lua/plenary.nvim" },
+  },
 
-	"tpope/vim-surround",
+  "tpope/vim-surround",
 
-	{
-		"williamboman/mason.nvim",
-		"williamboman/mason-lspconfig.nvim",
-		"neovim/nvim-lspconfig",
-	},
+  {
+    "williamboman/mason.nvim",
+    dependencies = {
+      "williamboman/mason-lspconfig.nvim",
+      "neovim/nvim-lspconfig",
+    },
+    config = function()
+      require("mason").setup({})
 
-	"numToStr/Comment.nvim",
-	"JoosepAlviste/nvim-ts-context-commentstring",
+      require("mason-lspconfig").setup({
+        ensure_installed = {
+          "lua_ls",
+          "ts_ls",
+          "efm",
+          "graphql"
+        },
+        automatic_installation = true,
+      })
+    end,
+  },
 
-	"nvim-tree/nvim-tree.lua",
-	"nvim-tree/nvim-web-devicons",
+  "numToStr/Comment.nvim",
+  "JoosepAlviste/nvim-ts-context-commentstring",
 
-	"nvim-lualine/lualine.nvim",
+  "nvim-tree/nvim-tree.lua",
+  "nvim-tree/nvim-web-devicons",
 
-	"airblade/vim-gitgutter",
+  "nvim-lualine/lualine.nvim",
 
-	"hrsh7th/cmp-buffer",
-	"hrsh7th/cmp-path",
-	"hrsh7th/cmp-cmdline",
-	"hrsh7th/nvim-cmp",
-	"hrsh7th/cmp-nvim-lsp",
+  "airblade/vim-gitgutter",
 
-	"lukas-reineke/indent-blankline.nvim",
+  "hrsh7th/cmp-buffer",
+  "hrsh7th/cmp-path",
+  "hrsh7th/cmp-cmdline",
+  "hrsh7th/nvim-cmp",
+  "hrsh7th/cmp-nvim-lsp",
 
-	"machakann/vim-highlightedyank",
+  "lukas-reineke/indent-blankline.nvim",
 
-	"windwp/nvim-autopairs",
+  "machakann/vim-highlightedyank",
 
-	"dyng/ctrlsf.vim",
+  "windwp/nvim-autopairs",
 
-	"nvimdev/lspsaga.nvim",
+  "dyng/ctrlsf.vim",
 
-	"onsails/lspkind.nvim",
+  "nvimdev/lspsaga.nvim",
 
-	"PatschD/zippy.nvim",
+  "onsails/lspkind.nvim",
 
-	"zivyangll/git-blame.vim",
+  "PatschD/zippy.nvim",
 
-	"prisma/vim-prisma",
+  "zivyangll/git-blame.vim",
+
+  "prisma/vim-prisma",
 
   {
     'stevearc/conform.nvim',
     opts = {},
   },
 
-	"windwp/nvim-ts-autotag",
+  "windwp/nvim-ts-autotag",
 
-	{
-		"mg979/vim-visual-multi",
-		branch = "master",
-		init = function()
-			vim.g.VM_maps = {
-				["Add Cursor Down"] = "<C-j>",
-				["Add Cursor Up"] = "<C-k>",
-			}
-		end,
-	},
-	{
-		"vidocqh/data-viewer.nvim",
-		opts = {},
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"kkharji/sqlite.lua", -- Optional, sqlite support
-		},
-	},
+  {
+    "mg979/vim-visual-multi",
+    branch = "master",
+    init = function()
+      vim.g.VM_maps = {
+        ["Add Cursor Down"] = "<C-j>",
+        ["Add Cursor Up"] = "<C-k>",
+      }
+    end,
+  },
+  {
+    "vidocqh/data-viewer.nvim",
+    opts = {},
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "kkharji/sqlite.lua", -- Optional, sqlite support
+    },
+  },
   "rust-lang/rust.vim",
   {
     "b0o/schemastore.nvim",
