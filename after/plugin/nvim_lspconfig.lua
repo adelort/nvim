@@ -5,7 +5,6 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 local on_attach = function(_, bufnr)
   local opts = { noremap = true, silent = true, buffer = bufnr }
 
-  vim.keymap.set("n", "gr", ":Lspsaga finder<CR>", opts)
   vim.keymap.set("n", "gp", ":Lspsaga peek_definition<CR>", opts)
   vim.keymap.set("n", "gd", ":Lspsaga goto_definition<CR>", opts)
   vim.keymap.set("n", "<leader>la", ":Lspsaga code_action<CR>", opts)

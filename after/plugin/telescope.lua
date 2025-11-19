@@ -16,7 +16,7 @@ require("telescope").setup({
 
 vim.keymap.set("n", "<leader>pa", builtin.find_files, {})
 vim.keymap.set("n", "<leader>pf", builtin.git_files, {})
-vim.keymap.set("n", "<leader>pr", builtin.oldfiles, {})
+vim.keymap.set("n", "<leader>pr", builtin.lsp_references, {})
 vim.keymap.set("n", "<leader>pc", builtin.commands, {})
 vim.keymap.set("n", "<leader>pj", builtin.jumplist, {})
 vim.keymap.set("n", "<leader>pb", function() builtin.buffers({ sort_lastused = true, }) end, {})
