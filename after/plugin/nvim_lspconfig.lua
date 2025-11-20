@@ -67,6 +67,12 @@ lspconfig.ts_ls.setup({
   root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", ".git"),
 })
 
+-- eslint
+lspconfig.eslint.setup({
+  capabilities = capabilities,
+  on_attach = on_attach,
+})
+
 -- bash
 lspconfig.bashls.setup({
   capabilities = capabilities,
