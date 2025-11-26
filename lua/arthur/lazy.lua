@@ -24,12 +24,14 @@ require("lazy").setup({
   {
     "nvim-telescope/telescope.nvim",
     tag = "0.1.5",
+    cmd = "Telescope",
     dependencies = { "nvim-lua/plenary.nvim" },
   },
 
   -- Treesitter (syntax highlighting & parsing)
   {
     "nvim-treesitter/nvim-treesitter",
+    event = { "BufReadPost", "BufNewFile" },
     build = ":TSUpdate",
     dependencies = {
       "JoosepAlviste/nvim-ts-context-commentstring",
@@ -40,6 +42,7 @@ require("lazy").setup({
   -- LSP Configuration
   {
     "williamboman/mason.nvim",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "williamboman/mason-lspconfig.nvim",
       "neovim/nvim-lspconfig",
@@ -78,6 +81,7 @@ require("lazy").setup({
 
   {
     "nvimdev/lspsaga.nvim",
+    event = "LspAttach",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons",
@@ -86,12 +90,14 @@ require("lazy").setup({
 
   {
     "b0o/schemastore.nvim",
+    lazy = true,
     dependencies = { "neovim/nvim-lspconfig" },
   },
 
   -- Completion
   {
     "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
@@ -104,6 +110,7 @@ require("lazy").setup({
   -- Formatting
   {
     "stevearc/conform.nvim",
+    event = { "BufReadPre", "BufNewFile" },
     opts = {},
   },
 
@@ -116,13 +123,23 @@ require("lazy").setup({
   -- Git Integration
   {
     "kdheepak/lazygit.nvim",
+    cmd = "LazyGit",
     dependencies = { "nvim-lua/plenary.nvim" },
   },
-  "airblade/vim-gitgutter",
-  "zivyangll/git-blame.vim",
+  {
+    "airblade/vim-gitgutter",
+    event = { "BufReadPost", "BufNewFile" },
+  },
+  {
+    "zivyangll/git-blame.vim",
+    event = "VeryLazy",
+  },
 
   -- Editing Enhancements
-  "tpope/vim-surround",
+  {
+    "tpope/vim-surround",
+    event = { "BufReadPost", "BufNewFile" },
+  },
   {
     "numToStr/Comment.nvim",
     dependencies = { "JoosepAlviste/nvim-ts-context-commentstring" },
@@ -141,34 +158,56 @@ require("lazy").setup({
       }
     end,
   },
-  "machakann/vim-highlightedyank",
+  {
+    "machakann/vim-highlightedyank",
+    event = "TextYankPost",
+  },
 
   -- UI Enhancements
   {
     "nvim-lualine/lualine.nvim",
+    lazy = false,
+    priority = 900,
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
   {
     "lukas-reineke/indent-blankline.nvim",
+    event = { "BufReadPost", "BufNewFile" },
     main = "ibl",
   },
 
   -- Utilities
-  "mbbill/undotree",
-  "dyng/ctrlsf.vim",
-  "PatschD/zippy.nvim",
+  {
+    "mbbill/undotree",
+    cmd = "UndotreeToggle",
+  },
+  {
+    "dyng/ctrlsf.vim",
+    cmd = { "CtrlSF", "CtrlSFToggle" },
+  },
+  {
+    "PatschD/zippy.nvim",
+    event = "VeryLazy",
+  },
   {
     "dstein64/vim-startuptime",
     cmd = "StartupTime",
   },
 
   -- Language-Specific
-  "prisma/vim-prisma",
-  "rust-lang/rust.vim",
+  {
+    "prisma/vim-prisma",
+    ft = "prisma",
+  },
+  {
+    "rust-lang/rust.vim",
+    ft = "rust",
+  },
 
   -- Data Viewer
   {
     "vidocqh/data-viewer.nvim",
+    cmd = "DataViewer",
     opts = {},
     dependencies = {
       "nvim-lua/plenary.nvim",
