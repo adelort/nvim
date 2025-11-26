@@ -157,6 +157,10 @@ require("lazy").setup({
   "mbbill/undotree",
   "dyng/ctrlsf.vim",
   "PatschD/zippy.nvim",
+  {
+    "dstein64/vim-startuptime",
+    cmd = "StartupTime",
+  },
 
   -- Language-Specific
   "prisma/vim-prisma",
