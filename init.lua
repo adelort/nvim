@@ -182,7 +182,6 @@ require("lazy").setup({
       })
 
       -- LSP Configuration
-      local lspconfig = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
       local on_attach = function(_, bufnr)
@@ -201,7 +200,8 @@ require("lazy").setup({
       end
 
       -- Lua
-      lspconfig.lua_ls.setup({
+      vim.lsp.enable('lua_ls')
+      vim.lsp.config('lua_ls', {
         capabilities = capabilities,
         on_attach = on_attach,
         settings = {
@@ -223,7 +223,8 @@ require("lazy").setup({
       })
 
       -- JSON
-      lspconfig.jsonls.setup({
+      vim.lsp.enable('jsonls')
+      vim.lsp.config('jsonls', {
         capabilities = capabilities,
         on_attach = on_attach,
         filetypes = { "json", "jsonc" },
@@ -236,7 +237,8 @@ require("lazy").setup({
       })
 
       -- TypeScript
-      lspconfig.ts_ls.setup({
+      vim.lsp.enable('ts_ls')
+      vim.lsp.config('ts_ls', {
         capabilities = capabilities,
         on_attach = on_attach,
         filetypes = {
@@ -245,51 +247,57 @@ require("lazy").setup({
           "javascriptreact",
           "javascript",
         },
-        root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", ".git"),
       })
 
       -- ESLint
-      lspconfig.eslint.setup({
+      vim.lsp.enable('eslint')
+      vim.lsp.config('eslint', {
         capabilities = capabilities,
         on_attach = on_attach,
       })
 
       -- Bash
-      lspconfig.bashls.setup({
+      vim.lsp.enable('bashls')
+      vim.lsp.config('bashls', {
         capabilities = capabilities,
         on_attach = on_attach,
         filetypes = { "sh", "aliasrc" },
       })
 
       -- Docker
-      lspconfig.dockerls.setup({
+      vim.lsp.enable('dockerls')
+      vim.lsp.config('dockerls', {
         capabilities = capabilities,
         on_attach = on_attach,
       })
 
       -- YAML
-      lspconfig.yamlls.setup({
+      vim.lsp.enable('yamlls')
+      vim.lsp.config('yamlls', {
         capabilities = capabilities,
         on_attach = on_attach,
         filetypes = { "yaml", "yml" },
       })
 
       -- SQL
-      lspconfig.sqlls.setup({
+      vim.lsp.enable('sqlls')
+      vim.lsp.config('sqlls', {
         capabilities = capabilities,
         on_attach = on_attach,
         filetypes = { "sql" },
       })
 
       -- Prisma
-      lspconfig.prismals.setup({
+      vim.lsp.enable('prismals')
+      vim.lsp.config('prismals', {
         capabilities = capabilities,
         on_attach = on_attach,
         filetypes = { "prisma" },
       })
 
       -- Rust
-      lspconfig.rust_analyzer.setup({
+      vim.lsp.enable('rust_analyzer')
+      vim.lsp.config('rust_analyzer', {
         capabilities = capabilities,
         on_attach = on_attach,
         settings = {
@@ -298,8 +306,9 @@ require("lazy").setup({
       })
 
       -- GraphQL
-      lspconfig.graphql.setup({
-        root_dir = lspconfig.util.root_pattern('.graphqlrc.yml'),
+      vim.lsp.enable('graphql')
+      vim.lsp.config('graphql', {
+        root_markers = { '.graphqlrc.yml' },
         filetypes = {
           'graphql',
           'typescript',
