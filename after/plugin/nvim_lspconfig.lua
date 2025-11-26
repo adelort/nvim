@@ -127,11 +127,3 @@ lspconfig.graphql.setup({
   },
   on_attach = on_attach
 })
-
--- Setup conform.nvim for formatting
-require("conform").setup({
-  formatters_by_ft = {
-    json = { "prettier" },
-    jsonc = { "prettier" },
-  },
-})
