@@ -1,23 +1,18 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
     "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
+    "--branch=stable",
     lazypath,
   })
 end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  {
-    "nvim-telescope/telescope.nvim",
-    tag = "0.1.5",
-    dependencies = { "nvim-lua/plenary.nvim" },
-  },
-
+  -- Colorscheme
   {
     "folke/tokyonight.nvim",
     lazy = false,
@@ -25,98 +20,117 @@ require("lazy").setup({
     opts = {},
   },
 
+  -- Telescope (fuzzy finder)
   {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-  },
-
-  "mbbill/undotree",
-
-  {
-    "kdheepak/lazygit.nvim",
-    -- optional for floating window border decoration
+    "nvim-telescope/telescope.nvim",
+    tag = "0.1.5",
     dependencies = { "nvim-lua/plenary.nvim" },
   },
 
-  "tpope/vim-surround",
+  -- Treesitter (syntax highlighting & parsing)
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    dependencies = {
+      "JoosepAlviste/nvim-ts-context-commentstring",
+      "windwp/nvim-ts-autotag",
+    },
+  },
 
+  -- LSP Configuration
   {
     "williamboman/mason.nvim",
     dependencies = {
       "williamboman/mason-lspconfig.nvim",
       "neovim/nvim-lspconfig",
+      "WhoIsSethDaniel/mason-tool-installer.nvim",
     },
     config = function()
       require("mason").setup({})
-    end,
-  },
 
-  {
-    'WhoIsSethDaniel/mason-tool-installer.nvim',
-    config = function()
-      require('mason-tool-installer').setup {
+      require("mason-lspconfig").setup({
+        automatic_installation = true,
+      })
+
+      require("mason-tool-installer").setup({
         ensure_installed = {
+          -- Language Servers
           "bash-language-server",
           "dockerfile-language-server",
           "eslint-lsp",
           "graphql-language-service-cli",
           "json-lsp",
           "lua-language-server",
-          "prettier",
           "prisma-language-server",
-          "sqlfluff",
           "sqlls",
           "typescript-language-server",
           "yaml-language-server",
+
+          -- Formatters & Linters
+          "prettier",
+          "sqlfluff",
           "pgformatter",
-          "graphql"
         },
-        automatic_installation = true
-      }
+        automatic_installation = true,
+      })
     end,
   },
 
-  "numToStr/Comment.nvim",
-  "JoosepAlviste/nvim-ts-context-commentstring",
-
-  "nvim-tree/nvim-tree.lua",
-  "nvim-tree/nvim-web-devicons",
-
-  "nvim-lualine/lualine.nvim",
-
-  "airblade/vim-gitgutter",
-
-  "hrsh7th/cmp-buffer",
-  "hrsh7th/cmp-path",
-  "hrsh7th/cmp-cmdline",
-  "hrsh7th/nvim-cmp",
-  "hrsh7th/cmp-nvim-lsp",
-
-  "lukas-reineke/indent-blankline.nvim",
-
-  "machakann/vim-highlightedyank",
-
-  "windwp/nvim-autopairs",
-
-  "dyng/ctrlsf.vim",
-
-  "nvimdev/lspsaga.nvim",
-
-  "onsails/lspkind.nvim",
-
-  "PatschD/zippy.nvim",
-
-  "zivyangll/git-blame.vim",
-
-  "prisma/vim-prisma",
+  {
+    "nvimdev/lspsaga.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
+  },
 
   {
-    'stevearc/conform.nvim',
+    "b0o/schemastore.nvim",
+    dependencies = { "neovim/nvim-lspconfig" },
+  },
+
+  -- Completion
+  {
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-cmdline",
+      "onsails/lspkind.nvim",
+    },
+  },
+
+  -- Formatting
+  {
+    "stevearc/conform.nvim",
     opts = {},
   },
 
-  "windwp/nvim-ts-autotag",
+  -- File Explorer
+  {
+    "nvim-tree/nvim-tree.lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+  },
 
+  -- Git Integration
+  {
+    "kdheepak/lazygit.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+  },
+  "airblade/vim-gitgutter",
+  "zivyangll/git-blame.vim",
+
+  -- Editing Enhancements
+  "tpope/vim-surround",
+  {
+    "numToStr/Comment.nvim",
+    dependencies = { "JoosepAlviste/nvim-ts-context-commentstring" },
+  },
+  {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+  },
   {
     "mg979/vim-visual-multi",
     branch = "master",
@@ -127,17 +141,34 @@ require("lazy").setup({
       }
     end,
   },
+  "machakann/vim-highlightedyank",
+
+  -- UI Enhancements
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+  },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+  },
+
+  -- Utilities
+  "mbbill/undotree",
+  "dyng/ctrlsf.vim",
+  "PatschD/zippy.nvim",
+
+  -- Language-Specific
+  "prisma/vim-prisma",
+  "rust-lang/rust.vim",
+
+  -- Data Viewer
   {
     "vidocqh/data-viewer.nvim",
     opts = {},
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "kkharji/sqlite.lua", -- Optional, sqlite support
+      "kkharji/sqlite.lua",
     },
-  },
-  "rust-lang/rust.vim",
-  {
-    "b0o/schemastore.nvim",
-    dependencies = { "neovim/nvim-lspconfig" },
   },
 })
