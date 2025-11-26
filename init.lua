@@ -473,25 +473,57 @@ require("lazy").setup({
     dependencies = { "nvim-lua/plenary.nvim" },
   },
   {
-    "airblade/vim-gitgutter",
-    event = { "BufReadPost", "BufNewFile" },
-    init = function()
-      vim.g.gitgutter_map_keys = 0
-      vim.cmd([[ set updatetime=100 ]])
-    end,
-    keys = {
-      { "<leader>gj", "<cmd>GitGutterNextHunk<cr>",    desc = "Next hunk" },
-      { "<leader>gk", "<cmd>GitGutterPrevHunk<cr>",    desc = "Previous hunk" },
-      { "<leader>gs", "<cmd>GitGutterStageHunk<cr>",   desc = "Stage hunk" },
-      { "<leader>gr", "<cmd>GitGutterUndoHunk<cr>",    desc = "Undo hunk" },
-      { "<leader>gp", "<cmd>GitGutterPreviewHunk<cr>", desc = "Preview hunk" },
-    },
-  },
-  {
-    "zivyangll/git-blame.vim",
-    event = "VeryLazy",
-    keys = {
-      { "<leader>gl", ":<C-u>call gitblame#echo()<cr>", desc = "Git blame" },
+    {
+      "lewis6991/gitsigns.nvim",
+      event = { "BufReadPost", "BufNewFile" },
+      opts = {
+        signs = {
+          add          = { text = '│' },
+          change       = { text = '│' },
+          delete       = { text = '_' },
+          topdelete    = { text = '‾' },
+          changedelete = { text = '~' },
+          untracked    = { text = '┆' },
+        },
+        on_attach = function(bufnr)
+          local gs = package.loaded.gitsigns
+
+          local function map(mode, l, r, opts)
+            opts = opts or {}
+            opts.buffer = bufnr
+            vim.keymap.set(mode, l, r, opts)
+          end
+
+          -- Navigation
+          map('n', '<leader>gj', function()
+            if vim.wo.diff then return '<leader>gj' end
+            vim.schedule(function() gs.next_hunk() end)
+            return '<Ignore>'
+          end, { expr = true, desc = 'Next hunk' })
+
+          map('n', '<leader>gk', function()
+            if vim.wo.diff then return '<leader>gk' end
+            vim.schedule(function() gs.prev_hunk() end)
+            return '<Ignore>'
+          end, { expr = true, desc = 'Previous hunk' })
+
+          -- Actions
+          map('n', '<leader>gs', gs.stage_hunk, { desc = 'Stage hunk' })
+          map('n', '<leader>gr', gs.reset_hunk, { desc = 'Reset hunk' })
+          map('v', '<leader>gs', function() gs.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end,
+            { desc = 'Stage hunk' })
+          map('v', '<leader>gr', function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end,
+            { desc = 'Reset hunk' })
+          map('n', '<leader>gS', gs.stage_buffer, { desc = 'Stage buffer' })
+          map('n', '<leader>gu', gs.undo_stage_hunk, { desc = 'Undo stage hunk' })
+          map('n', '<leader>gR', gs.reset_buffer, { desc = 'Reset buffer' })
+          map('n', '<leader>gp', gs.preview_hunk, { desc = 'Preview hunk' })
+          map('n', '<leader>gb', function() gs.blame_line { full = true } end, { desc = 'Blame line' })
+          map('n', '<leader>gB', gs.toggle_current_line_blame, { desc = 'Toggle line blame' })
+          map('n', '<leader>gd', gs.diffthis, { desc = 'Diff this' })
+          map('n', '<leader>gD', function() gs.diffthis('~') end, { desc = 'Diff this ~' })
+        end
+      },
     },
   },
 
