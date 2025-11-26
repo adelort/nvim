@@ -48,16 +48,6 @@ require("lazy").setup({
     },
     config = function()
       require("mason").setup({})
-
-      require("mason-lspconfig").setup({
-        ensure_installed = {
-          "lua_ls",
-          "ts_ls",
-          "efm",
-          "graphql",
-        },
-        automatic_installation = true,
-      })
     end,
   },
 
@@ -66,8 +56,22 @@ require("lazy").setup({
     config = function()
       require('mason-tool-installer').setup {
         ensure_installed = {
-          "pgformatter"
-        }
+          "bash-language-server",
+          "dockerfile-language-server",
+          "eslint-lsp",
+          "graphql-language-service-cli",
+          "json-lsp",
+          "lua-language-server",
+          "prettier",
+          "prisma-language-server",
+          "sqlfluff",
+          "sqlls",
+          "typescript-language-server",
+          "yaml-language-server",
+          "pgformatter",
+          "graphql"
+        },
+        automatic_installation = true
       }
     end,
   },
