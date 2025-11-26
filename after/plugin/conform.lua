@@ -10,6 +10,7 @@ conform.setup({
     rust = { "rustfmt" },
     json = { "prettierd", "prettier", stop_after_first = true },
     jsonc = { "prettierd", "prettier", stop_after_first = true },
+    sql = { "pg_format" },
   },
 })
 

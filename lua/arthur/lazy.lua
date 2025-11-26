@@ -54,10 +54,21 @@ require("lazy").setup({
           "lua_ls",
           "ts_ls",
           "efm",
-          "graphql"
+          "graphql",
         },
         automatic_installation = true,
       })
+    end,
+  },
+
+  {
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    config = function()
+      require('mason-tool-installer').setup {
+        ensure_installed = {
+          "pgformatter"
+        }
+      }
     end,
   },
 
