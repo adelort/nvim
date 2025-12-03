@@ -611,16 +611,7 @@ require("lazy").setup({
     "nvim-tree/nvim-web-devicons",
     lazy = true,
     config = function()
-      require("nvim-web-devicons").setup({
-        override = {
-          tsx = {
-            icon = "",
-            color = "#1354bf",
-            cterm_color = "26",
-            name = "TypescriptReact",
-          },
-        },
-      })
+      require("nvim-web-devicons").setup()
     end,
   },
 
