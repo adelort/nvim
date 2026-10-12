@@ -1,6 +1,12 @@
 -- Leader key
 vim.g.mapleader = " "
 
+-- Disable nvim-ts-context-commentstring's legacy CursorHold autocommand.
+-- Commenting is driven through the Comment.nvim pre_hook integration instead,
+-- so this only removes the autocmd that errors on buffers without a Treesitter
+-- parser (e.g. shell scripts). Must be set before the plugin loads.
+vim.g.skip_ts_context_commentstring_module = true
+
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
   command = "set formatoptions-=o",
 })
@@ -117,7 +123,16 @@ require("lazy").setup({
     event = { "BufReadPost", "BufNewFile" },
     build = ":TSUpdate",
     dependencies = {
-      "JoosepAlviste/nvim-ts-context-commentstring",
+      {
+        "JoosepAlviste/nvim-ts-context-commentstring",
+        -- enable_autocmd = false removes the CursorHold autocmd that errors on
+        -- buffers without a Treesitter parser (e.g. shell scripts). Commenting
+        -- still works: Comment.nvim computes the commentstring on demand via its
+        -- pre_hook integration below.
+        config = function()
+          require("ts_context_commentstring").setup({ enable_autocmd = false })
+        end,
+      },
       "windwp/nvim-ts-autotag",
     },
     config = function()
