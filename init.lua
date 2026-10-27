@@ -11,6 +11,11 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
   command = "set formatoptions-=o",
 })
 
+-- Briefly highlight yanked text.
+vim.api.nvim_create_autocmd("TextYankPost", {
+  callback = function() vim.hl.on_yank({ timeout = 100 }) end,
+})
+
 -- Prevents a warning in :checkhealth
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
@@ -162,9 +167,7 @@ require("lazy").setup({
     config = function()
       require("mason").setup({})
 
-      require("mason-lspconfig").setup({
-        automatic_installation = true,
-      })
+      require("mason-lspconfig").setup({ automatic_enable = false })
 
       require("mason-tool-installer").setup({
         ensure_installed = {
@@ -188,7 +191,6 @@ require("lazy").setup({
           -- Required by nvim-treesitter (main branch) to compile parsers
           "tree-sitter-cli",
         },
-        automatic_installation = true,
       })
 
       -- LSP Configuration
@@ -209,34 +211,22 @@ require("lazy").setup({
         vim.keymap.set("n", "K", ":Lspsaga hover_doc<CR>", opts)
       end
 
-      -- Lua
-      vim.lsp.enable('lua_ls')
+      -- Shared defaults for every server; each server below adds only its overrides.
+      vim.lsp.config('*', { capabilities = capabilities, on_attach = on_attach })
+
       vim.lsp.config('lua_ls', {
-        capabilities = capabilities,
-        on_attach = on_attach,
         settings = {
           Lua = {
-            diagnostics = {
-              globals = { "vim" },
-            },
-            telemetry = {
-              enable = false,
-            },
+            diagnostics = { globals = { "vim" } },
+            telemetry = { enable = false },
             workspace = {
-              library = {
-                vim.env.VIMRUNTIME,
-                "${3rd}/luv/library"
-              },
+              library = { vim.env.VIMRUNTIME, "${3rd}/luv/library" },
             },
           },
         },
       })
 
-      -- JSON
-      vim.lsp.enable('jsonls')
       vim.lsp.config('jsonls', {
-        capabilities = capabilities,
-        on_attach = on_attach,
         filetypes = { "json", "jsonc" },
         settings = {
           json = {
@@ -246,87 +236,23 @@ require("lazy").setup({
         },
       })
 
-      -- TypeScript
-      vim.lsp.enable('ts_ls')
       vim.lsp.config('ts_ls', {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        filetypes = {
-          "typescript",
-          "typescriptreact",
-          "javascriptreact",
-          "javascript",
-        },
+        filetypes = { "typescript", "typescriptreact", "javascriptreact", "javascript" },
       })
 
-      -- ESLint
-      vim.lsp.enable('eslint')
-      vim.lsp.config('eslint', {
-        capabilities = capabilities,
-        on_attach = on_attach,
-      })
+      vim.lsp.config('bashls', { filetypes = { "sh", "aliasrc" } })
+      vim.lsp.config('yamlls', { filetypes = { "yaml", "yml" } })
+      vim.lsp.config('sqlls', { filetypes = { "sql" } })
+      vim.lsp.config('prismals', { filetypes = { "prisma" } })
 
-      -- Bash
-      vim.lsp.enable('bashls')
-      vim.lsp.config('bashls', {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        filetypes = { "sh", "aliasrc" },
-      })
-
-      -- Docker
-      vim.lsp.enable('dockerls')
-      vim.lsp.config('dockerls', {
-        capabilities = capabilities,
-        on_attach = on_attach,
-      })
-
-      -- YAML
-      vim.lsp.enable('yamlls')
-      vim.lsp.config('yamlls', {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        filetypes = { "yaml", "yml" },
-      })
-
-      -- SQL
-      vim.lsp.enable('sqlls')
-      vim.lsp.config('sqlls', {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        filetypes = { "sql" },
-      })
-
-      -- Prisma
-      vim.lsp.enable('prismals')
-      vim.lsp.config('prismals', {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        filetypes = { "prisma" },
-      })
-
-      -- Rust
-      vim.lsp.enable('rust_analyzer')
-      vim.lsp.config('rust_analyzer', {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        settings = {
-          ["rust-analyzer"] = {},
-        },
-      })
-
-      -- GraphQL
-      vim.lsp.enable('graphql')
       vim.lsp.config('graphql', {
         root_markers = { '.graphqlrc.yml' },
-        filetypes = {
-          'graphql',
-          'typescript',
-          'typescriptreact',
-          'javascript',
-          'javascriptreact',
-        },
-        on_attach = on_attach
+        filetypes = { 'graphql', 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
+      })
+
+      vim.lsp.enable({
+        'lua_ls', 'jsonls', 'ts_ls', 'eslint', 'bashls', 'dockerls',
+        'yamlls', 'sqlls', 'prismals', 'rust_analyzer', 'graphql',
       })
     end,
   },
@@ -352,7 +278,6 @@ require("lazy").setup({
   {
     "b0o/schemastore.nvim",
     lazy = true,
-    dependencies = { "neovim/nvim-lspconfig" },
   },
 
   -- Completion
@@ -430,24 +355,27 @@ require("lazy").setup({
         desc = "Format file"
       },
     },
-    opts = {
-      formatters_by_ft = {
-        lua = { "stylua" },
-        javascript = { "prettierd", "prettier", stop_after_first = true },
-        typescript = { "prettierd", "prettier", stop_after_first = true },
-        javascriptreact = { "prettierd", "prettier", stop_after_first = true },
-        typescriptreact = { "prettierd", "prettier", stop_after_first = true },
-        rust = { "rustfmt" },
-        json = { "prettierd", "prettier", stop_after_first = true },
-        jsonc = { "prettierd", "prettier", stop_after_first = true },
-        css = { "prettierd", "prettier", stop_after_first = true },
-        scss = { "prettierd", "prettier", stop_after_first = true },
-        html = { "prettierd", "prettier", stop_after_first = true },
-        markdown = { "prettierd", "prettier", stop_after_first = true },
-        yaml = { "prettierd", "prettier", stop_after_first = true },
-        sql = { "pg_format" },
-      },
-    },
+    opts = function()
+      local prettier = { "prettierd", "prettier", stop_after_first = true }
+      return {
+        formatters_by_ft = {
+          lua = { "stylua" },
+          javascript = prettier,
+          typescript = prettier,
+          javascriptreact = prettier,
+          typescriptreact = prettier,
+          rust = { "rustfmt" },
+          json = prettier,
+          jsonc = prettier,
+          css = prettier,
+          scss = prettier,
+          html = prettier,
+          markdown = prettier,
+          yaml = prettier,
+          sql = { "pg_format" },
+        },
+      }
+    end,
   },
 
   -- File Explorer
@@ -502,57 +430,55 @@ require("lazy").setup({
     dependencies = { "nvim-lua/plenary.nvim" },
   },
   {
-    {
-      "lewis6991/gitsigns.nvim",
-      event = { "BufReadPost", "BufNewFile" },
-      opts = {
-        signs = {
-          add          = { text = '│' },
-          change       = { text = '│' },
-          delete       = { text = '_' },
-          topdelete    = { text = '‾' },
-          changedelete = { text = '~' },
-          untracked    = { text = '┆' },
-        },
-        on_attach = function(bufnr)
-          local gs = package.loaded.gitsigns
-
-          local function map(mode, l, r, opts)
-            opts = opts or {}
-            opts.buffer = bufnr
-            vim.keymap.set(mode, l, r, opts)
-          end
-
-          -- Navigation
-          map('n', '<leader>gj', function()
-            if vim.wo.diff then return '<leader>gj' end
-            vim.schedule(function() gs.next_hunk() end)
-            return '<Ignore>'
-          end, { expr = true, desc = 'Next hunk' })
-
-          map('n', '<leader>gk', function()
-            if vim.wo.diff then return '<leader>gk' end
-            vim.schedule(function() gs.prev_hunk() end)
-            return '<Ignore>'
-          end, { expr = true, desc = 'Previous hunk' })
-
-          -- Actions
-          map('n', '<leader>gs', gs.stage_hunk, { desc = 'Stage hunk' })
-          map('n', '<leader>gr', gs.reset_hunk, { desc = 'Reset hunk' })
-          map('v', '<leader>gs', function() gs.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end,
-            { desc = 'Stage hunk' })
-          map('v', '<leader>gr', function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end,
-            { desc = 'Reset hunk' })
-          map('n', '<leader>gS', gs.stage_buffer, { desc = 'Stage buffer' })
-          map('n', '<leader>gu', gs.undo_stage_hunk, { desc = 'Undo stage hunk' })
-          map('n', '<leader>gR', gs.reset_buffer, { desc = 'Reset buffer' })
-          map('n', '<leader>gp', gs.preview_hunk, { desc = 'Preview hunk' })
-          map('n', '<leader>gb', function() gs.blame_line { full = true } end, { desc = 'Blame line' })
-          map('n', '<leader>gB', gs.toggle_current_line_blame, { desc = 'Toggle line blame' })
-          map('n', '<leader>gd', gs.diffthis, { desc = 'Diff this' })
-          map('n', '<leader>gD', function() gs.diffthis('~') end, { desc = 'Diff this ~' })
-        end
+    "lewis6991/gitsigns.nvim",
+    event = { "BufReadPost", "BufNewFile" },
+    opts = {
+      signs = {
+        add          = { text = '│' },
+        change       = { text = '│' },
+        delete       = { text = '_' },
+        topdelete    = { text = '‾' },
+        changedelete = { text = '~' },
+        untracked    = { text = '┆' },
       },
+      on_attach = function(bufnr)
+        local gs = package.loaded.gitsigns
+
+        local function map(mode, l, r, opts)
+          opts = opts or {}
+          opts.buffer = bufnr
+          vim.keymap.set(mode, l, r, opts)
+        end
+
+        -- Navigation
+        map('n', '<leader>gj', function()
+          if vim.wo.diff then return '<leader>gj' end
+          vim.schedule(function() gs.next_hunk() end)
+          return '<Ignore>'
+        end, { expr = true, desc = 'Next hunk' })
+
+        map('n', '<leader>gk', function()
+          if vim.wo.diff then return '<leader>gk' end
+          vim.schedule(function() gs.prev_hunk() end)
+          return '<Ignore>'
+        end, { expr = true, desc = 'Previous hunk' })
+
+        -- Actions
+        map('n', '<leader>gs', gs.stage_hunk, { desc = 'Stage hunk' })
+        map('n', '<leader>gr', gs.reset_hunk, { desc = 'Reset hunk' })
+        map('v', '<leader>gs', function() gs.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end,
+          { desc = 'Stage hunk' })
+        map('v', '<leader>gr', function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end,
+          { desc = 'Reset hunk' })
+        map('n', '<leader>gS', gs.stage_buffer, { desc = 'Stage buffer' })
+        map('n', '<leader>gu', gs.undo_stage_hunk, { desc = 'Undo stage hunk' })
+        map('n', '<leader>gR', gs.reset_buffer, { desc = 'Reset buffer' })
+        map('n', '<leader>gp', gs.preview_hunk, { desc = 'Preview hunk' })
+        map('n', '<leader>gb', function() gs.blame_line { full = true } end, { desc = 'Blame line' })
+        map('n', '<leader>gB', gs.toggle_current_line_blame, { desc = 'Toggle line blame' })
+        map('n', '<leader>gd', gs.diffthis, { desc = 'Diff this' })
+        map('n', '<leader>gD', function() gs.diffthis('~') end, { desc = 'Diff this ~' })
+      end
     },
   },
 
@@ -597,14 +523,6 @@ require("lazy").setup({
       }
     end,
   },
-  {
-    "machakann/vim-highlightedyank",
-    event = "TextYankPost",
-    init = function()
-      vim.g.highlightedyank_highlight_duration = 100
-    end,
-  },
-
   -- UI Enhancements
   {
     "nvim-lualine/lualine.nvim",
@@ -632,14 +550,6 @@ require("lazy").setup({
       },
     },
   },
-  {
-    "nvim-tree/nvim-web-devicons",
-    lazy = true,
-    config = function()
-      require("nvim-web-devicons").setup()
-    end,
-  },
-
   -- Utilities
   {
     "mbbill/undotree",
@@ -689,12 +599,12 @@ require("lazy").setup({
         desc = "Buffer Diagnostics (Trouble)",
       },
       {
-        "<leader>cs",
+        "<leader>xs",
         "<cmd>Trouble symbols toggle focus=false<cr>",
         desc = "Symbols (Trouble)",
       },
       {
-        "<leader>cl",
+        "<leader>xl",
         "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
         desc = "LSP Definitions / references / ... (Trouble)",
       },
