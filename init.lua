@@ -117,43 +117,35 @@ require("lazy").setup({
     end,
   },
 
-  -- Treesitter (syntax highlighting & parsing)
+  -- Treesitter: the `main` branch (the archived `master` branch does not support
+  -- Neovim 0.12). It has no module system, so parsers and highlighting are set up by hand.
   {
     "nvim-treesitter/nvim-treesitter",
-    event = { "BufReadPost", "BufNewFile" },
+    branch = "main",
+    lazy = false,
     build = ":TSUpdate",
     dependencies = {
       {
         "JoosepAlviste/nvim-ts-context-commentstring",
-        -- enable_autocmd = false removes the CursorHold autocmd that errors on
-        -- buffers without a Treesitter parser (e.g. shell scripts). Commenting
-        -- still works: Comment.nvim computes the commentstring on demand via its
-        -- pre_hook integration below.
-        config = function()
-          require("ts_context_commentstring").setup({ enable_autocmd = false })
-        end,
+        main = "ts_context_commentstring",
+        -- No autocmd: Comment.nvim resolves the commentstring on demand via its pre_hook.
+        opts = { enable_autocmd = false },
       },
-      "windwp/nvim-ts-autotag",
+      {
+        "windwp/nvim-ts-autotag",
+        opts = { opts = { enable_close = true, enable_rename = true, enable_close_on_slash = true } },
+      },
     },
     config = function()
-      require("nvim-treesitter.configs").setup({
-        ensure_installed = {
-          "javascript", "typescript", "tsx", "c", "lua",
-          "vim", "vimdoc", "query", "graphql", "yaml"
-        },
-        sync_install = false,
-        auto_install = false,
-        highlight = {
-          enable = true,
-          additional_vim_regex_highlighting = false,
-        },
-        autotag = {
-          enable = true,
-          enable_rename = true,
-          enable_close = true,
-          enable_close_on_slash = true,
-          filetypes = { "html", "xml", "javascriptreact", "typescriptreact" },
-        },
+      -- Parser compilation needs the tree-sitter CLI, installed via mason; mason loads
+      -- lazily, so put its bin on PATH before installing.
+      vim.env.PATH = vim.fn.stdpath("data") .. "/mason/bin:" .. vim.env.PATH
+      require("nvim-treesitter").install({
+        "javascript", "typescript", "tsx", "c", "lua", "vim", "vimdoc",
+        "query", "graphql", "yaml", "html", "xml",
+      })
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function() pcall(vim.treesitter.start) end,
       })
     end,
   },
@@ -192,6 +184,9 @@ require("lazy").setup({
           "biome",
           "sqlfluff",
           "pgformatter",
+
+          -- Required by nvim-treesitter (main branch) to compile parsers
+          "tree-sitter-cli",
         },
         automatic_installation = true,
       })
@@ -663,7 +658,13 @@ require("lazy").setup({
   },
   {
     "PatschD/zippy.nvim",
-    event = "VeryLazy",
+    -- Unmaintained and still requires nvim-treesitter.ts_utils, removed on the
+    -- main branch. Shim the one function it uses with the native API.
+    init = function()
+      package.preload["nvim-treesitter.ts_utils"] = function()
+        return { get_node_at_cursor = function() return vim.treesitter.get_node() end }
+      end
+    end,
     keys = {
       { "<leader>lg", "<cmd>lua require('zippy').insert_print()<cr>", desc = "Insert print statement" },
     },
