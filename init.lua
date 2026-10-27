@@ -84,7 +84,7 @@ require("lazy").setup({
   -- Telescope (fuzzy finder)
   {
     "nvim-telescope/telescope.nvim",
-    tag = "0.1.5",
+    tag = "v0.2.2",
     cmd = "Telescope",
     keys = {
       { "<leader>pa", function() require("telescope.builtin").find_files() end,                      desc = "Find files" },
